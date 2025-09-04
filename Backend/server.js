@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { createServer } from 'http';
-import { sequelize } from './src/models/index.js'; // import sequelize
+import sequelize  from './src/config/sequelize.js'; // import sequelize
 
 dotenv.config();
 
