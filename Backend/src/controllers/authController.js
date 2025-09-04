@@ -10,18 +10,18 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key-change-in-prod
 
 export const login = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
         // Input validation
-        if (!username || !password) {
+        if (!email || !password) {
             return res.status(400).json({ 
-                message: 'Username and password are required',
+                message: 'Email and password are required',
                 error: 'VALIDATION_ERROR'
             });
         }
 
         // Authenticate user through service
-        const authResult = await authService.authenticateUser(username, password);
+        const authResult = await authService.authenticateUser(email, password);
 
         if (!authResult.success) {
             return res.status(403).json({ 
@@ -35,8 +35,7 @@ export const login = async (req, res) => {
        
         const payload = {
             id: user.id,
-            username: user.username,
-            role: user.role
+            email: user.email
         };
 
         // Sign JWT token
@@ -47,8 +46,7 @@ export const login = async (req, res) => {
             token,
             user: {
                 id: user.id,
-                username: user.username,
-                role: user.role
+                email: user.email
             }
         });
     } catch (error) {
@@ -75,8 +73,7 @@ export const getCurrentUser = async (req, res) => {
 
         res.json({
             id: user.data.id,
-            username: user.data.username,
-            role: user.data.role
+            email: user.data.email
         });
     } catch (error) {
         console.error('Get current user error:', error);
@@ -90,12 +87,12 @@ export const getCurrentUser = async (req, res) => {
 // Register new user
 export const register = async (req, res) => {
     try {
-        const { username, password, role = 'user' } = req.body;
+        const { email, password, role = 'user' } = req.body;
 
         // Input validation
-        if (!username || !password) {
+        if (!email || !password) {
             return res.status(400).json({ 
-                message: 'Username and password are required',
+                message: 'Email and password are required',
                 error: 'VALIDATION_ERROR'
             });
         }
@@ -108,7 +105,7 @@ export const register = async (req, res) => {
         }
 
         // Create user through service
-        const createResult = await authService.createUser(username, password, role);
+        const createResult = await authService.createUser(email, password);
 
         if (!createResult.success) {
             return res.status(400).json({ 
@@ -121,8 +118,7 @@ export const register = async (req, res) => {
             message: 'User created successfully',
             user: {
                 id: createResult.data.id,
-                username: createResult.data.username,
-                role: createResult.data.role
+                email: createResult.data.email
             }
         });
     } catch (error) {
