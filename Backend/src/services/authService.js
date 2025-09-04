@@ -1,10 +1,8 @@
 import bcryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
-<<<<<<< HEAD
 import { User } from '../models/index.js';
-=======
-import User from '../models/user.js'; // Sequelize User model
->>>>>>> 61373d43e06ddb2b3ae8d53b4d2d5c9d6f250974
+
+
 
 dotenv.config();
 
@@ -73,7 +71,7 @@ class AuthService {
   /**
    * Create new user
    */
-  async createUser(email, password) {
+  async createUser(name, email, password) {
     try {
       const existingUser = await User.findOne({ where: { email } });
 
@@ -82,6 +80,7 @@ class AuthService {
       }
 
       const newUser = await User.create({
+        name,
         email,
         password // Model will hash this automatically
       });
