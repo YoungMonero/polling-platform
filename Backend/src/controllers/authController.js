@@ -32,7 +32,7 @@ export const login = async (req, res) => {
 
         const { user } = authResult;
         
-        // Create JWT payload
+       
         const payload = {
             id: user.id,
             username: user.username,

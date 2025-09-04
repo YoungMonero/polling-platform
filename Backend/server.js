@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { createServer } from 'http';
-import { sequelize } from './models/index.js'; // import sequelize
+import { sequelize } from './src/models/index.js'; // import sequelize
 
 dotenv.config();
 
@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Routes
-import authRoutes from './routes/authRoutes.js';
+import authRoutes from './src/routes/authRoutes.js';
 app.use('/api/auth', authRoutes);
 
 // Health check

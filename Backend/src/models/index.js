@@ -3,7 +3,7 @@ import User from './User.js';
 import Session from './Session.js';
 import Poll from './Poll.js';
 import Participant from './Participant.js';
-import Response from './Response.js';
+import Response from './responce.js';
 
 // Associations
 Session.belongsTo(User, { foreignKey: 'hostId' });
