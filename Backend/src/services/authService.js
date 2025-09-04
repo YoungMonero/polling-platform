@@ -1,6 +1,10 @@
 import bcryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
+<<<<<<< HEAD
+import { User } from '../models/index.js';
+=======
 import User from '../models/user.js'; // Sequelize User model
+>>>>>>> 61373d43e06ddb2b3ae8d53b4d2d5c9d6f250974
 
 dotenv.config();
 
@@ -16,17 +20,17 @@ class AuthService {
   }
 
   /**
-   * Authenticate user with username and password
+   * Authenticate user with email and password
    */
-  async authenticateUser(username, password) {
+  async authenticateUser(email, password) {
     try {
-      const user = await User.findOne({ where: { username } });
+      const user = await User.findOne({ where: { email } });
 
       if (!user) {
         return { success: false, message: 'Invalid credentials' };
       }
 
-      const isPasswordValid = await this.comparePassword(password, user.password);
+      const isPasswordValid = await user.comparePassword(password);
 
       if (!isPasswordValid) {
         return { success: false, message: 'Invalid credentials' };
@@ -36,8 +40,7 @@ class AuthService {
         success: true,
         user: {
           id: user.id,
-          username: user.username,
-          role: user.role
+          email: user.email
         }
       };
     } catch (error) {
@@ -59,7 +62,7 @@ class AuthService {
 
       return {
         success: true,
-        data: { id: user.id, username: user.username, role: user.role }
+        data: { id: user.id, email: user.email }
       };
     } catch (error) {
       console.error('Get user by ID service error:', error);
@@ -70,25 +73,22 @@ class AuthService {
   /**
    * Create new user
    */
-  async createUser(username, password, role = 'user') {
+  async createUser(email, password) {
     try {
-      const existingUser = await User.findOne({ where: { username } });
+      const existingUser = await User.findOne({ where: { email } });
 
       if (existingUser) {
-        return { success: false, message: 'Username already exists' };
+        return { success: false, message: 'Email already exists' };
       }
 
-      const hashedPassword = await this.hashPassword(password);
-
       const newUser = await User.create({
-        username,
-        password: hashedPassword,
-        role
+        email,
+        password // Model will hash this automatically
       });
 
       return {
         success: true,
-        data: { id: newUser.id, username: newUser.username, role: newUser.role },
+        data: { id: newUser.id, email: newUser.email },
         message: 'User created successfully'
       };
     } catch (error) {
@@ -103,7 +103,7 @@ class AuthService {
   async getAllUsers() {
     try {
       const users = await User.findAll({
-        attributes: ['id', 'username', 'role']
+        attributes: ['id', 'email', 'createdAt', 'updatedAt']
       });
 
       return { success: true, data: users };

@@ -1,6 +1,6 @@
 import {DataTypes, Model} from 'sequelize';
 import bcrypt from 'bcryptjs'
-import sequelize from '../config/sequelize.js'
+import sequelize from '../config/sequelize.js';
 
 class User extends Model {
     async comparePassword(password) {
@@ -13,10 +13,6 @@ User.init({
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
-  },
-    username: {
-    type: DataTypes.STRING,
-    allowNull: false,
   },
   email: {
     type: DataTypes.STRING,
