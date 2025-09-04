@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import { authService } from '../services/authService.js';
 
 dotenv.config();
