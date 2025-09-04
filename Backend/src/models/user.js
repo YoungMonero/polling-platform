@@ -1,6 +1,6 @@
 import {DataTypes, Model} from 'sequelize';
 import bcrypt from 'bcryptjs'
-import sequelize from '../config/sequelize';
+import sequelize from '../config/sequelize.js'
 
 class User extends Model {
     async comparePassword(password) {

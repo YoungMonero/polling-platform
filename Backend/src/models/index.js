@@ -1,8 +1,8 @@
 import sequelize from '../config/sequelize.js';
-import User from './User.js';
-import Session from './Session.js';
-import Poll from './Poll.js';
-import Participant from './Participant.js';
+import User from './user.js';
+import Session from './session.js';
+import Poll from './poll.js';
+import Participant from './participant.js';
 import Response from './responce.js';
 
 // Associations
