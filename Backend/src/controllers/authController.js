@@ -87,10 +87,10 @@ export const getCurrentUser = async (req, res) => {
 // Register new user
 export const register = async (req, res) => {
     try {
-        const { email, password, role = 'user' } = req.body;
+        const {name, email, password, role = 'user' } = req.body;
 
         // Input validation
-        if (!email || !password) {
+        if (!email || !password || !name) {
             return res.status(400).json({ 
                 message: 'Email and password are required',
                 error: 'VALIDATION_ERROR'
