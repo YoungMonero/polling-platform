@@ -11,7 +11,6 @@ app.use((req, res) => {
     console.log('server is running');
     res.send('Server is running'); 
   });
-  
 
 app.listen(PORT, () => {
     console.log(`server running on ${PORT}`);
