@@ -71,7 +71,7 @@ class AuthService {
   /**
    * Create new user
    */
-  async createUser(name, email, password) {
+  async createUser( email, password) {
     try {
       const existingUser = await User.findOne({ where: { email } });
 
@@ -80,7 +80,6 @@ class AuthService {
       }
 
       const newUser = await User.create({
-        name,
         email,
         password // Model will hash this automatically
       });
