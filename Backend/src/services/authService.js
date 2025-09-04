@@ -2,6 +2,8 @@ import bcryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
 import { User } from '../models/index.js';
 
+
+
 dotenv.config();
 
 const SALT_ROUNDS = 10;
@@ -69,7 +71,7 @@ class AuthService {
   /**
    * Create new user
    */
-  async createUser(email, password) {
+  async createUser( email, password) {
     try {
       const existingUser = await User.findOne({ where: { email } });
 
