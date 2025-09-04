@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use((req, res) => {
-    console.log('server is runcd srcning');
+    console.log('server is running');
     res.send('Server is running'); 
   });
 
