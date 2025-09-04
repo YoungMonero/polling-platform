@@ -1,6 +1,6 @@
 import bcryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
-import User from '../models/User.js'; // Sequelize User model
+import User from '../models/user.js'; // Sequelize User model
 
 dotenv.config();
 
