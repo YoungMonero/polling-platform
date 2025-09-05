@@ -4,7 +4,7 @@ import Polls from './Components/Polls/Polls'
 import Question from './Components/Question/Questions'
 
 
-/* const App = () => (
+const App = () => (
   <Router>
     <Header />
     <Routes>
@@ -13,6 +13,6 @@ import Question from './Components/Question/Questions'
       <Route path="/questions" element={<Question />} />
     </Routes>
   </Router>
-) */
+)
 
 export default App
