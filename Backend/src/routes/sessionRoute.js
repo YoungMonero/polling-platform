@@ -5,10 +5,10 @@ import { validate, sessionSchema, participantSchema } from '../middlewares/valid
 
 const router = express.Router();
 
-router.use(authenticateJWT);  // Protect host routes
+// Host routes require authentication
 
-router.post('/', createSession);  // Host creates a session
-router.get('/:id', getSession);  // Host views session details
+router.post('/', authenticateJWT, createSession);  // Host creates a session
+router.get('/:id', authenticateJWT, getSession);  // Host views session details
 
 // Participant join (public endpoint, no auth)
 router.post('/join', validate(participantSchema), joinSession);
