@@ -11,6 +11,11 @@ root {
   --light-gray: #E9ECEF;
 }
 
+*{
+  padding: 0;
+  margin: 0;
+}
+
 body {
   font-family: "Montserrat", sans-serif;
   background-color: rgb(236, 236, 236);
