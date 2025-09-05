@@ -5,14 +5,14 @@ import Question from './Components/Question/Questions'
 
 
 const App = () => (
-  <Router>
+ /*  <Router>
     <Header />
     <Routes>
       <Route path="/" element={<div>Welcome Home</div>} />
       <Route path="/polls" element={<Polls />} />
       <Route path="/questions" element={<Question />} />
     </Routes>
-  </Router>
+  </Router> */
 )
 
 export default App
