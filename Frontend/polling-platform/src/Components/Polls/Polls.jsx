@@ -1,7 +1,7 @@
 import React from "react";
-import Styles from "./polls.module.css"
+import Styles from "./styles.module.css"
 
-const polls = () => {
+const Polls = () => {
   return (
     <div className={Styles.container}>
     <h1>Polls Page</h1>
@@ -10,4 +10,4 @@ const polls = () => {
   )
 }
 
-export default polls
+export default Polls

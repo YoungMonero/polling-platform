@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import styles from './Password.module.css'
+import styles from './styles.module.css'
 import {Eye, EyeOff} from 'lucide-react'
 
-const Passwordinput = ({value, onChange, Placeholder}) => {
+const PasswordInput = ({value, onChange, Placeholder}) => {
   const [isShowpassword, SetIsShowPassword] = useState(false); 
 
   const toggleShowPassword = () => {
@@ -38,4 +38,4 @@ const Passwordinput = ({value, onChange, Placeholder}) => {
   )
 }
 
-export default Passwordinput
+export default PasswordInput

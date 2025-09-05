@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import Styles from './Header.module.css'
+import Styles from './styles.module.css'
 
 const Header = () => {
   const navigate = useNavigate() // hook to navigate programmatically

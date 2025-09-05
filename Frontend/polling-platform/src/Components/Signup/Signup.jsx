@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styles from'./signup.module.css';
-import Passwordinput from '../../components/PassWord/Passwordinput.jsx';
-import { validateEmail } from '../../utils/helper';
+import styles from'./styles.module.css';
+import PasswordInput from '../PassWord/PasswordInput.js';
+import { validateEmail } from '../../utils/helper.js';
 
 const Signup = () => {
     const [name, setName] = useState ('');
@@ -55,7 +55,7 @@ const Signup = () => {
                onChange={(e)=> setEmail(e.target.value)} 
                />
                
-            <Passwordinput
+            <PasswordInput
                value={password}
                onChange={(e)=> setPassword(e.target.value)}
              />

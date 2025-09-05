@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styles from './Login.module.css';
+import styles from './styles.module.css';
 // import { Link } from 'react-router-dom';
-import Passwordinput from '../../components/PassWord/Passwordinput.jsx';
+import PasswordInput from '../../Components/PassWord/PasswordInput.jsx';
 import { validateEmail } from '../../utils/helper.js';
 
 const Login = () => {
@@ -43,7 +43,7 @@ const Login = () => {
              onChange={(e)=> setEmail(e.target.value)} 
              />
              
-          <Passwordinput
+          <PasswordInput
              value={password}
              onChange={(e)=> setPassword(e.target.value)}
            />
