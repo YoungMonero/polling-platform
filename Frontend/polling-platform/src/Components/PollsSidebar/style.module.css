@@ -1,0 +1,30 @@
+/* src/components/Sidebar.module.css */
+.sidebar {
+  width: 200px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-right: 1px solid #e0e0e0;
+}
+
+.addButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.pollsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.pollItem {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+}

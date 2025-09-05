@@ -13,7 +13,8 @@ const Participant = () => {
 
     
   return (
-    <div className={styles.participant}>
+   <div className={styles.body}>
+     <div className={styles.participant}>
       <h2>Joining as a participant ?</h2>
       <p>No account needed</p>
       <div className={styles.handleinput}>
@@ -31,6 +32,7 @@ const Participant = () => {
       </form>
       </div>
     </div>
+   </div>
   )
 }
 
