@@ -26,3 +26,12 @@ export const getSession = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getParticipants = async (req, res, next) => {
+  try {
+    const participants = await SessionService.getParticipants(req.params.id, req.user.id);
+    res.json(participants);
+  } catch (err) {
+    next(err);
+  }
+};
