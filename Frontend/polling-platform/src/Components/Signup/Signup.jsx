@@ -1,75 +1,62 @@
-import React, { useState } from 'react';
-import styles from'./styles.module.css';
-import PasswordInput from '../PassWord/PasswordInput.js';
-import { validateEmail } from '../../utils/helper.js';
+import React, { useState } from "react";
+import styles from "./styles.module.css";
 
-const Signup = () => {
-    const [name, setName] = useState ('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('')
-    const [error, setError] = useState(null)
-  
-  
-    const handleSignup = async(e) => {
-      e.preventDefault()
+export default function Register() {
+  const [form, setForm] = useState({ username: "", email: "", password: "" });
 
-      if (!name) {
-        setError('Please enter your name')
-        return 
-      }
-   
-      if (!validateEmail(email)) {
-        setError('Please enter a valid email address.')
-        return;
-      }
-  
-      if (!password) {
-        setError('Please enter the password')
-        return 
-      }
-  
-      setError('')
-    }
-  
-  
-    return (
-      <div>
-        
-        <div className={styles.signupContainer}>
-  
-          <form onSubmit= {handleSignup}>
-            <h2>SignUp</h2>
-             <input 
-              type="text" 
-               placeholder='Name' 
-               className='name'  
-               value={name}
-               onChange={(e)=> setName(e.target.value)}
-               />
-
-            <input 
-              type="text" 
-               placeholder='Email' 
-               className='inputbox' 
-               value={email}
-               onChange={(e)=> setEmail(e.target.value)} 
-               />
-               
-            <PasswordInput
-               value={password}
-               onChange={(e)=> setPassword(e.target.value)}
-             />
-  
-             {error && <p className={styles.error}>{error}</p>}
-  
-            <button type="submit">Login</button>
-            <p>Already have and account?  <a>Login</a></p>
-          </form>
-  
-  
-        </div>
-      </div>
-    );
+  const handleRegister = (e) => {
+    e.preventDefault();
+    alert(`Registered: ${form.username}, ${form.email}`);
   };
 
-export default Signup;
+  return (
+    <div className={styles.registerContainer}>
+     
+      <div className={styles.registerRight}>
+        <form className={styles.registerForm} onSubmit={handleRegister}>
+          <h2>Create Your Account</h2>
+          <p>Fill in the details to register your account.</p>
+
+          <label>Username</label>
+          <input
+            type="text"
+            placeholder="Your name"
+            value={form.username}
+            onChange={(e) => setForm({ ...form, username: e.target.value })}
+          />
+
+          <label>Email</label>
+          <input
+            type="email"
+            placeholder="user@company.com"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+          />
+
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+          />
+
+          <button type="submit" className={styles.registerBtn}>
+            Register
+          </button>
+
+          <div className={styles.divider}>OR REGISTER WITH</div>
+
+          <div className={styles.socialButtons}>
+            <button type="button">Google</button>
+            <button type="button">Apple</button>
+          </div>
+
+          <p className={styles.switchText}>
+            Already have an account? <a href="#">Log In</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+}

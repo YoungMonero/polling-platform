@@ -1,0 +1,116 @@
+/* src/components/MainContent.module.css */
+.mainContent {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.pollHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.pollType {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.pollSettings {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.pollQuestion input {
+  width: 100%;
+  padding: 10px;
+  font-size: 24px;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.pollOptions .option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.pollOptions input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.votePercentage {
+  color: #666;
+}
+
+.addOption {
+  background: none;
+  border: none;
+  color: #4caf50;
+  cursor: pointer;
+}
+
+.untitledPoll {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.untitled {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.votes {
+  color: #666;
+}
+
+.interactionSection {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.startInteraction {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.interactionText {
+  color: #666;
+  margin-right: 20px;
+}
+
+.nextPoll, .previewPoll {
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.viewParticipant {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
