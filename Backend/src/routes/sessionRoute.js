@@ -5,7 +5,8 @@ import { validate, sessionSchema, participantSchema } from '../middlewares/valid
 
 const router = express.Router();
 
-// Host routes (protected)
+// Host routes require authentication
+
 router.post('/', authenticateJWT, createSession);  // Host creates a session
 router.get('/:id', authenticateJWT, getSession);  // Host views session details
 

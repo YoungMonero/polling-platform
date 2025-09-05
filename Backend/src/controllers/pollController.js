@@ -49,8 +49,8 @@ export const hidePoll = async (req, res, next) => {
 export const getPublishedPolls = async (req, res, next) => {
   try {
     const sessionId = req.params.sessionId;
-    // This would need to be implemented in PollService
-    res.json({ message: "Not implemented yet" });
+    const polls = await PollService.getPublishedPolls(sessionId);
+    res.json(polls);
   } catch (error) {
     next(error);
   }

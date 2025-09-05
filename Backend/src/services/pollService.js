@@ -44,4 +44,13 @@ export class PollService {
     if (!poll) throw new Error('Poll not found');
     return Response.findAll({ where: { pollId } });
   }
+
+  static async getPublishedPolls(sessionId) {
+    return Poll.findAll({ 
+      where: { 
+        sessionId, 
+        status: 'published' 
+      } 
+    });
+  }
 }
