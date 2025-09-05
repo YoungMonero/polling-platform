@@ -7,4 +7,4 @@ export const loginlimit = rateLimit({
   error: 'TOO_MANY_REQUESTS',
   standardHeaders: true,
   legacyHeaders: false,
-});
+}); 
