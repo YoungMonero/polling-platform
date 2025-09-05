@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.module.css'
+import Styles from './Questions.module.css'
 
 const QuestionPage = () => {
     return (

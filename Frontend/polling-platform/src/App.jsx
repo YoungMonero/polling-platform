@@ -1,17 +1,19 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Header from './Components/Header/Header'
+import Polls from './Components/Polls/Polls'
+import Question from './Components/Question/Questions'
 
-import React from 'react'
-import Login from './Components/Login/Login'
-import Register from './Components/Signup/Signup'
-import LoginPage from './Pages/LoginPages/LoginPage'
-import SignUpPage from './Pages/SignUpPage/SignUpPage'
-import PollPage from './Pages/PollsPages/PollsPage'
 
-const App = () => {
-  return (
-    <div>
-       <PollPage/>
-    </div>
-  )
-}
+const App = () => (
+ /*  <Router>
+    <Header />
+    <Routes>
+      <Route path="/" element={<div>Welcome Home</div>} />
+      <Route path="/polls" element={<Polls />} />
+      <Route path="/questions" element={<Question />} />
+    </Routes>
+  </Router> */
+)
+
 
 export default App
