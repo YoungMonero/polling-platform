@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './src/routes/authRoutes.js';
+import SessionRoutes from './src/routes/sessionRoute.js';
 import './src/models/index.js'; // Initialize database models
 
 dotenv.config();
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/sessions', SessionRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
