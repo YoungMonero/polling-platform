@@ -1,5 +1,5 @@
 import express from 'express';
-import { createSession, joinSession, getSession } from '../controllers/sessionController.js';
+import { createSession, joinSession, getSession, getParticipants } from '../controllers/sessionController.js';
 import { authenticateJWT } from '../middlewares/authMiddleware.js';
 import { validate, sessionSchema, participantSchema } from '../middlewares/validation.js';
 
@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.post('/', authenticateJWT, createSession);  // Host creates a session
 router.get('/:id', authenticateJWT, getSession);  // Host views session details
+
+router.get('/:id/participants', getParticipants);
 
 // Participant join (public endpoint, no auth)
 router.post('/join', validate(participantSchema), joinSession);

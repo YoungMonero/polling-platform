@@ -18,4 +18,10 @@ export class SessionService {
     if (!session) throw new Error('Session not found or not owned');
     return session;
   }
+
+  static async getParticipants(sessionId, hostId) {
+    const session = await Session.findOne({ where: { id: sessionId, hostId } });
+    if (!session) throw new Error('Session not found or not owned');
+    return Participant.findAll({ where: { sessionId } });
+  }
 }
