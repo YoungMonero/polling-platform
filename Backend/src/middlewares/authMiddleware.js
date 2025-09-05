@@ -6,14 +6,12 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key-change-in-production';
 
 /**
- * JWT Authentication Middleware
- * Verifies JWT token and adds user info to request object
+ * Middleware to authenticate JWT tokens
  */
 export const authenticateJWT = (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
 
-        // Check if authorization header exists
         if (!authHeader) {
             return res.status(401).json({ 
                 message: 'Authorization header missing',
@@ -21,7 +19,6 @@ export const authenticateJWT = (req, res, next) => {
             });
         }
 
-        // Extract token from Bearer <token>
         const token = authHeader.split(' ')[1];
 
         if (!token) {
@@ -31,7 +28,6 @@ export const authenticateJWT = (req, res, next) => {
             });
         }
 
-        // Verify JWT token
         jwt.verify(token, JWT_SECRET, (err, decoded) => {
             if (err) {
                 console.error('JWT verification error:', err.message);
@@ -49,7 +45,6 @@ export const authenticateJWT = (req, res, next) => {
                 });
             }
 
-            // Add user info to request object
             req.user = decoded;
             next();
         });
@@ -63,17 +58,15 @@ export const authenticateJWT = (req, res, next) => {
 };
 
 /**
- * Role-based authorization middleware
+ * Middleware to authorize roles
  * @param {string|Array<string>} allowedRoles - Single role or array of allowed roles
  * @returns {Function} Middleware function
  */
 export const authorizeRoles = (allowedRoles) => {
-    // Convert single role to array for consistency
     const roles = Array.isArray(allowedRoles) ? allowedRoles : [allowedRoles];
     
     return (req, res, next) => {
         try {
-            // Check if user exists (should be set by authenticateJWT)
             if (!req.user) {
                 return res.status(401).json({ 
                     message: 'User not authenticated',
@@ -81,7 +74,6 @@ export const authorizeRoles = (allowedRoles) => {
                 });
             }
 
-            // Check if user has required role
             if (!roles.includes(req.user.role)) {
                 return res.status(403).json({ 
                     message: `Access denied. Required roles: ${roles.join(', ')}`,
@@ -100,25 +92,18 @@ export const authorizeRoles = (allowedRoles) => {
     };
 };
 
-/**
- * Admin only middleware (shorthand for authorizeRoles(['admin']))
- */
+// Shortcuts for role-based access
 export const adminOnly = authorizeRoles(['admin']);
-
-/**
- * User or Admin middleware (shorthand for authorizeRoles(['user', 'admin']))
- */
 export const userOrAdmin = authorizeRoles(['user', 'admin']);
 
 /**
- * Optional authentication middleware
- * Sets user info if token is valid, but doesn't fail if missing
+ * Middleware for optional authentication
+ * If token exists and is valid, req.user is set. Otherwise, continue.
  */
 export const optionalAuth = (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
 
-        // If no auth header, continue without user info
         if (!authHeader) {
             return next();
         }
@@ -129,24 +114,21 @@ export const optionalAuth = (req, res, next) => {
             return next();
         }
 
-        // Verify token if present
         jwt.verify(token, JWT_SECRET, (err, decoded) => {
             if (!err && decoded) {
                 req.user = decoded;
             }
-            // Continue regardless of token validity
             next();
         });
     } catch (error) {
         console.error('Optional auth middleware error:', error);
-        // Don't fail, just continue without user info
         next();
     }
 };
 
 /**
- * Check if current user can access their own resource or admin can access any
- * @param {string} userIdParam - Parameter name for user ID in request
+ * Middleware to check resource ownership or admin access
+ * @param {string} userIdParam - The request parameter containing the user ID
  * @returns {Function} Middleware function
  */
 export const checkOwnershipOrAdmin = (userIdParam = 'userId') => {

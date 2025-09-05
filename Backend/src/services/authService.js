@@ -38,7 +38,9 @@ class AuthService {
         success: true,
         user: {
           id: user.id,
-          email: user.email
+          name: user.name,
+          email: user.email,
+          role: user.role
         }
       };
     } catch (error) {
@@ -60,7 +62,12 @@ class AuthService {
 
       return {
         success: true,
-        data: { id: user.id, email: user.email }
+        data: { 
+          id: user.id, 
+          name: user.name, 
+          email: user.email, 
+          role: user.role 
+        }
       };
     } catch (error) {
       console.error('Get user by ID service error:', error);
@@ -71,7 +78,7 @@ class AuthService {
   /**
    * Create new user
    */
-  async createUser( email, password) {
+  async createUser(name, email, password, role = 'user') {
     try {
       const existingUser = await User.findOne({ where: { email } });
 
@@ -80,13 +87,20 @@ class AuthService {
       }
 
       const newUser = await User.create({
+        name,
         email,
+        role,
         password // Model will hash this automatically
       });
 
       return {
         success: true,
-        data: { id: newUser.id, email: newUser.email },
+        data: { 
+          id: newUser.id, 
+          name: newUser.name, 
+          email: newUser.email, 
+          role: newUser.role 
+        },
         message: 'User created successfully'
       };
     } catch (error) {
@@ -101,7 +115,7 @@ class AuthService {
   async getAllUsers() {
     try {
       const users = await User.findAll({
-        attributes: ['id', 'email', 'createdAt', 'updatedAt']
+        attributes: ['id', 'name', 'email', 'role', 'createdAt', 'updatedAt']
       });
 
       return { success: true, data: users };
