@@ -1,3 +1,4 @@
+// backend/middlewares/validation.js (updated)
 import Joi from 'joi';
 
 const validate = (schema) => (req, res, next) => {
@@ -26,6 +27,7 @@ export const pollSchema = Joi.object({
 });
 
 export const participantSchema = Joi.object({
+  code: Joi.string().min(6).required(),  // Added to allow session code
   name: Joi.string().min(3).required(),
   email: Joi.string().email().required(),
   phone: Joi.string().optional(),
