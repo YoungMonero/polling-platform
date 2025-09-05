@@ -26,6 +26,7 @@ export const pollSchema = Joi.object({
 });
 
 export const participantSchema = Joi.object({
+  code: Joi.string().length(8).required(),
   name: Joi.string().min(3).required(),
   email: Joi.string().email().required(),
   phone: Joi.string().optional(),

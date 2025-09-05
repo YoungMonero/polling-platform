@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './src/routes/authRoutes.js';
+import sessionRoutes from './src/routes/sessionRoute.js';
+import pollRoutes from './src/routes/pollRoutes.js';
 import './src/models/index.js'; // Initialize database models
 
 dotenv.config();
@@ -14,6 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/sessions', sessionRoutes);
+app.use('/api/polls', pollRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -30,6 +34,8 @@ app.get('/', (req, res) => {
         version: '1.0.0',
         endpoints: {
             auth: '/api/auth',
+            sessions: '/api/sessions',
+            polls: '/api/polls',
             health: '/health'
         }
     });
