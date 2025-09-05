@@ -5,24 +5,10 @@ export class PollService {
     return Poll.create({ title, options, status: 'draft', sessionId });
   }
 
-  static async updatePoll(pollId, { title, options, sessionId }) {
-    const poll = await Poll.findOne({ where: { id: pollId, sessionId } });
-    if (!poll) throw new Error('Poll not found');
-    await poll.update({ title, options });
-    return poll;
-  }
-
   static async publishPoll(pollId, sessionId) {
     const poll = await Poll.findOne({ where: { id: pollId, sessionId } });
     if (!poll) throw new Error('Poll not found');
     await poll.update({ status: 'published' });
-    return poll;
-  }
-
-  static async hidePoll(pollId, sessionId) {
-    const poll = await Poll.findOne({ where: { id: pollId, sessionId } });
-    if (!poll) throw new Error('Poll not found');
-    await poll.update({ status: 'draft' });
     return poll;
   }
 
