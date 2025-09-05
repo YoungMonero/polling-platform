@@ -1,56 +1,84 @@
-import { polls, STATUS, TYPE } from "../models/poll.js";
+import { PollService } from '../services/pollService.js';
 
-function generateId() {
-  return Date.now().toString();
-}
-
-export const createPoll = (req, res) => {
-  const { sessionId, type, question, options } = req.body;
-  if (!sessionId || !type || !question) {
-    return res.status(400).json({ error: "Missing fields" });
+export const createPoll = async (req, res, next) => {
+  try {
+    const { title, options, sessionId } = req.body;
+    if (!title || !options || !sessionId) {
+      return res.status(400).json({ error: "Missing required fields: title, options, sessionId" });
+    }
+    if (options.length < 2) {
+      return res.status(400).json({ error: "Poll requires at least 2 options" });
+    }
+    const poll = await PollService.createPoll({ title, options, sessionId });
+    res.status(201).json(poll);
+  } catch (error) {
+    next(error);
   }
-  if ((type === TYPE.MULTIPLE_CHOICE || type === TYPE.SINGLE_CHOICE) && (!options || options.length < 2)) {
-    return res.status(400).json({ error: "Choice polls require ≥2 options" });
+};
+
+export const publishPoll = async (req, res, next) => {
+  try {
+    const { sessionId } = req.body;
+    const poll = await PollService.publishPoll(req.params.id, sessionId);
+    res.json(poll);
+  } catch (error) {
+    next(error);
   }
-  const poll = {
-    id: generateId(),
-    sessionId,
-    status: STATUS.DRAFT,
-    type,
-    question,
-    options: options || [],
-    responses: new Map(),
-  };
-  polls.push(poll);
-  res.status(201).json(poll);
 };
 
-export const publishPoll = (req, res) => {
-  const poll = polls.find(p => p.id === req.params.id);
-  if (!poll) return res.status(404).json({ error: "Poll not found" });
-  poll.status = STATUS.PUBLISHED;
-  res.json(poll);
+export const closePoll = async (req, res, next) => {
+  try {
+    const { sessionId } = req.body;
+    const poll = await PollService.closePoll(req.params.id, sessionId);
+    res.json(poll);
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const closePoll = (req, res) => {
-  const poll = polls.find(p => p.id === req.params.id);
-  if (!poll) return res.status(404).json({ error: "Poll not found" });
-  poll.status = STATUS.CLOSED;
-  res.json(poll);
+export const hidePoll = async (req, res, next) => {
+  try {
+    const { sessionId } = req.body;
+    const poll = await PollService.hidePoll(req.params.id, sessionId);
+    res.json(poll);
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const getPublishedPolls = (req, res) => {
-  const sessionId = req.params.sessionId;
-  const publishedPolls = polls.filter(p => p.sessionId === sessionId && p.status === STATUS.PUBLISHED);
-  res.json(publishedPolls);
+export const getPublishedPolls = async (req, res, next) => {
+  try {
+    const sessionId = req.params.sessionId;
+    // This would need to be implemented in PollService
+    res.json({ message: "Not implemented yet" });
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const submitResponse = (req, res) => {
-  const poll = polls.find(p => p.id === req.params.id);
-  if (!poll) return res.status(404).json({ error: "Poll not found" });
-  const { participantId, response } = req.body;
-  if (!participantId || response === undefined) return res.status(400).json({ error: "Missing participantId or response" });
-  if (poll.status !== STATUS.PUBLISHED) return res.status(400).json({ error: "Poll not published" });
-  poll.responses.set(participantId, response);
-  res.status(201).json({ message: "Response recorded" });
+export const submitResponse = async (req, res, next) => {
+  try {
+    const { participantId, answer } = req.body;
+    if (!participantId || !answer) {
+      return res.status(400).json({ error: "Missing participantId or answer" });
+    }
+    const response = await PollService.submitResponse({
+      pollId: req.params.id,
+      participantId,
+      answer
+    });
+    res.status(201).json({ message: "Response recorded", response });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPollResponses = async (req, res, next) => {
+  try {
+    const { sessionId } = req.body;
+    const responses = await PollService.getResponses(req.params.id, sessionId);
+    res.json(responses);
+  } catch (error) {
+    next(error);
+  }
 };
