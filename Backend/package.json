@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "types": "modules",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "nodemon ./bin/www",
     "start": "server.js"
   },
   "keywords": [],
@@ -14,6 +13,7 @@
   "type": "module",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",

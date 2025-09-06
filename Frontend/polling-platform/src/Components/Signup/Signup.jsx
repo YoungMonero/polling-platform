@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import api from '../services/api.js';
-import { connectSocket, onUserRegistered } from '../services/socket.js';
+import api from '../../services/api.js';
+import { connectSocket, onUserRegistered } from '../../services/socket.js';
 import styles from "./styles.module.css";
 
 export default function Register() {
@@ -22,23 +22,23 @@ export default function Register() {
 
   // Handle form submission
   const handleRegister = async (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+  e.preventDefault();
+  const validationErrors = validate();
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
 
-    setErrors({});
-    try {
-      const { data } = await api.post('/auth/register', form);
-      console.log('Registration successful:', data);
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Registration failed:', error.message);
-      setErrors({ general: 'Registration failed. Try again.' });
-    }
-  };
+  setErrors({});
+  try {
+    const { data } = await api.post('/api/auth/register', form); // Updated path
+    console.log('Registration successful:', data);
+    navigate('/dashboard');
+  } catch (error) {
+    console.error('Registration failed:', error.message);
+    setErrors({ general: 'Registration failed. Try again.' });
+  }
+};
 
   // Handle input changes
   const handleChange = (e) => {
