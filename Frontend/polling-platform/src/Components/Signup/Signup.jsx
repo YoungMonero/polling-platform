@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import api from '../services/api.js';
+import { connectSocket, onUserRegistered } from '../services/socket.js';
 import styles from "./styles.module.css";
 
 export default function Register() {
@@ -12,12 +14,14 @@ export default function Register() {
     const newErrors = {};
     if (!form.username.trim()) newErrors.username = "Username is required";
     if (!form.email.trim()) newErrors.email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) newErrors.email = "Email is invalid";
     if (!form.password.trim()) newErrors.password = "Password is required";
+    else if (form.password.length < 6) newErrors.password = "Password must be at least 6 characters";
     return newErrors;
   };
 
   // Handle form submission
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -26,16 +30,34 @@ export default function Register() {
     }
 
     setErrors({});
-    console.log("Form submitted:", form);
-
-    // Redirect to Dashboard after registration
-    navigate("/dashboard");
+    try {
+      const { data } = await api.post('/auth/register', form);
+      console.log('Registration successful:', data);
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Registration failed:', error.message);
+      setErrors({ general: 'Registration failed. Try again.' });
+    }
   };
 
   // Handle input changes
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
+  // Socket.IO setup
+  useEffect(() => {
+    connectSocket();
+    onUserRegistered((data) => {
+      console.log('User registered event:', data);
+      if (data.email === form.email) {
+        navigate('/dashboard');
+      }
+    });
+    return () => {
+      // Cleanup on unmount
+    };
+  }, [form.email, navigate]);
 
   return (
     <div className={styles.container}>
@@ -73,6 +95,7 @@ export default function Register() {
             onChange={handleChange}
           />
           {errors.password && <p className={styles.error}>{errors.password}</p>}
+          {errors.general && <p className={styles.error}>{errors.general}</p>}
 
           <button type="submit" className={styles.primaryBtn}>
             Register
@@ -87,7 +110,7 @@ export default function Register() {
         </div>
 
         <p className={styles.switchText}>
-          Already have an account? <a href="#">Log In</a>
+          Already have an account? <a href="/host/login">Log In</a>
         </p>
       </div>
     </div>
