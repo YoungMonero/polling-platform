@@ -24,6 +24,7 @@ export const sessionSchema = Joi.object({
 export const pollSchema = Joi.object({
   title: Joi.string().min(3).required(),
   options: Joi.array().items(Joi.string()).min(2).required(),
+  sessionId: Joi.number().integer().required(),
 });
 
 export const participantSchema = Joi.object({

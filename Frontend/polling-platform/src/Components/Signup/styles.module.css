@@ -1,77 +1,123 @@
-.signupContainer {
+.container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
-  
-}
-
-.signupContainer h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #333;
-}
-
-.signupContainer form {
-display: flex;
-  flex-direction: column;
-  width: 550px;
-  background: white;
+  align-items: center;
+  min-height: 100vh;
+  background: #f4f6f9;
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  height: 500px;
 }
 
-.signupContainer input {
-  margin-bottom: 10px;
-  padding: 15px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.signupContainer button {
+.title {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #555;
+}
+
+.form label {
+  font-weight: 600;
+  margin-top: 10px;
+  display: block;
+}
+
+.form input {
+  width: 100%;
   padding: 10px;
-  font-size: 16px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.form input:focus {
+  border-color: #007bff;
+}
+
+.primaryBtn {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
   color: white;
-  background-color: #1da1f2;
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-top: 30px;
+  transition: background 0.2s ease;
 }
 
-.signupContainer button:hover {
-  background-color: #1a91da;
+.primaryBtn:hover {
+  background: #0056b3;
 }
 
-.signupContainer p {
-  margin-top: 10px;
-  font-size: 14px;
-   margin-top: 70px;
-   text-align: center;
+.divider {
+  margin: 20px 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #aaa;
 }
 
-.signupContainer a {
-  color: #1da1f2;
-  text-decoration: none;
-
+.socialButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
-.signupContainer a:hover {
-  text-decoration: underline;
+.googleBtn,
+.appleBtn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.signupContainer .name {
-  margin-top: 10px;
-  margin-bottom: 40px;
+.googleBtn:hover {
+  background: #f4f4f4;
+  border-color: #4285f4;
 }
 
-.signupContainer .error {
-  color: red;
-  margin-top: 5px;
-  text-align: left;
+.appleBtn:hover {
+  background: #f4f4f4;
+  border-color: #000;
+}
 
+.switchText {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 0.8rem;
+  margin-top: -8px;
+  margin-bottom: 10px;
+}
+
+.success {
+  color: #27ae60;
+  font-size: 0.9rem;
+  margin-top: 12px;
+  font-weight: 600;
+  text-align: center;
 }

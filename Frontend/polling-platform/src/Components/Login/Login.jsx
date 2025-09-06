@@ -1,63 +1,62 @@
-import React, { useState } from 'react';
-import styles from './styles.module.css';
-// import { Link } from 'react-router-dom';
-import PasswordInput from '../../Components/PassWord/PasswordInput.jsx';
-import { validateEmail } from '../../utils/helper.js';
+import React, { useState } from "react";
+import styles from "./styles.module.css";
 
-const Login = () => {
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
-
-
-  const handleLogin = async(e) => {
-    e.preventDefault()
-
-    if (!validateEmail(email)) {
-      setError('Please enter a valid email address.')
-      return;
-    }
-
-    if (!password) {
-      setError('Please enter the password')
-      return 
-    }
-
-    setError('')
-  }
-
+  const handleLogin = (e) => {
+    e.preventDefault();
+    alert(`Email: ${email}, Password: ${password}`);
+  };
 
   return (
-    <div>
-      
-      <div className={styles.container}>
+    <div className={styles.loginContainer}>
+  
+      <div className={styles.loginRight}>
+        <form className={styles.loginForm} onSubmit={handleLogin}>
+          <h2>Welcome Back</h2>
+          <p>Enter your email and password to access your account.</p>
 
-        <form onSubmit= {handleLogin}>
-          <h2>Login</h2>
-          <input 
-            type="text" 
-             placeholder='Email' 
-             className='inputbox' 
-             value={email}
-             onChange={(e)=> setEmail(e.target.value)} 
-             />
-             
-          <PasswordInput
-             value={password}
-             onChange={(e)=> setPassword(e.target.value)}
-           />
+          <label>Email</label>
+          <input
+            type="email"
+            placeholder="user@company.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-           {error && <p className='error'>{error}</p>}
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-          <button type="submit">Login</button>
-          <p>Not registered yet? <a >Create an Account</a></p>
+          <div className={styles.loginOptions}>
+            <label>
+              <input type="checkbox" /> <p>Remember Me</p>
+            </label>
+            <a href="#">Forgot Your Password?</a>
+          </div>
+
+          <button type="submit" className={styles.loginBtn}>
+            Log In
+          </button>
+
+          <div className={styles.divider}>OR LOGIN WITH</div>
+
+          <div className={styles.socialButtons}>
+            <button type="button">Google</button>
+            <button type="button">Apple</button>
+          </div>
+
+          <p className={styles.switchText}>
+            Don’t Have An Account? <a href="#">Register Now.</a>
+          </p>
         </form>
-
-
       </div>
     </div>
   );
-};
-
-export default Login;
+}

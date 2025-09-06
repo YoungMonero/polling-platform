@@ -1,71 +1,60 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import authRoutes from './src/routes/authRoutes.js';
-import sessionRoutes from './src/routes/sessionRoute.js';
-import pollRoutes from './src/routes/pollRoutes.js';
+import app from './app.js';
+import http from 'http';
+import { Server } from 'socket.io';
+import socketSetup from './src/socket.js'; // Import Socket.IO setup
 
-import './src/models/index.js'; // Initialize database models
+const port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
 
-dotenv.config();
+const server = http.createServer(app);
+const io = new Server(server, { 
+  cors: { 
+    origin: 'http://localhost:3000', // Frontend dev URL
+    methods: ['GET', 'POST'],
+  },
+});
+socketSetup(io); // Initialize Socket.IO
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/sessions', sessionRoutes);
-app.use('/api/polls', pollRoutes);
-
-
-// Health check endpoint
-app.get('/health', (req, res) => {
-    res.json({ 
-        message: 'Polling Platform Backend is running',
-        timestamp: new Date().toISOString()
-    });
+// Attach io to request for controllers
+app.use((req, res, next) => {
+  req.io = io;
+  next();
 });
 
-// Root endpoint
-app.get('/', (req, res) => {
-    res.json({ 
-        message: 'Polling Platform Backend API',
-        version: '1.0.0',
-        endpoints: {
-            auth: '/api/auth',
-            sessions: '/api/sessions',
-            polls: '/api/polls',
-            health: '/health'
-        }
-    });
-});
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
 
-// 404 handler
-app.use((req, res) => {
-    res.status(404).json({ 
-        message: 'Route not found',
-        error: 'NOT_FOUND'
-    });
-});
-
-// Global error handler
-app.use((error, req, res, next) => {
-    console.error('Global error handler:', error);
-    res.status(500).json({ 
-        message: 'Internal server error',
-        error: 'SERVER_ERROR'
-    });
-});
-
-if (process.env.NODE_ENV !== 'test') {
-    app.listen(PORT, () => {
-        console.log(` Polling Platform Backend server running on port ${PORT}`);
-        console.log(` API Documentation available at http://localhost:${PORT}/api/auth`);
-        console.log(` Health check: http://localhost:${PORT}/health`);
-    });
+function normalizePort(val) {
+  const port = parseInt(val, 10);
+  if (isNaN(port)) return val;
+  if (port >= 0) return port;
+  return false;
 }
 
-export default app;
+function onError(error) {
+  if (error.syscall !== 'listen') throw error;
+  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+    default:
+      throw error;
+  }
+}
+
+function onListening() {
+  const addr = server.address();
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+  console.log(`Polling Platform Backend server running on ${bind}`);
+  console.log(`API Documentation available at http://localhost:${port}/api/auth`);
+  console.log(`Health check: http://localhost:${port}/health`);
+}
+
+if (process.env.NODE_ENV === 'test') {
+  module.exports = server; // For testing
+}

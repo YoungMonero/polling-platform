@@ -1,75 +1,95 @@
-import React, { useState } from 'react';
-import styles from'./styles.module.css';
-import PasswordInput from '../PassWord/PasswordInput.js';
-import { validateEmail } from '../../utils/helper.js';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./styles.module.css";
 
-const Signup = () => {
-    const [name, setName] = useState ('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('')
-    const [error, setError] = useState(null)
-  
-  
-    const handleSignup = async(e) => {
-      e.preventDefault()
+export default function Register() {
+  const [form, setForm] = useState({ username: "", email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
-      if (!name) {
-        setError('Please enter your name')
-        return 
-      }
-   
-      if (!validateEmail(email)) {
-        setError('Please enter a valid email address.')
-        return;
-      }
-  
-      if (!password) {
-        setError('Please enter the password')
-        return 
-      }
-  
-      setError('')
-    }
-  
-  
-    return (
-      <div>
-        
-        <div className={styles.signupContainer}>
-  
-          <form onSubmit= {handleSignup}>
-            <h2>SignUp</h2>
-             <input 
-              type="text" 
-               placeholder='Name' 
-               className='name'  
-               value={name}
-               onChange={(e)=> setName(e.target.value)}
-               />
-
-            <input 
-              type="text" 
-               placeholder='Email' 
-               className='inputbox' 
-               value={email}
-               onChange={(e)=> setEmail(e.target.value)} 
-               />
-               
-            <PasswordInput
-               value={password}
-               onChange={(e)=> setPassword(e.target.value)}
-             />
-  
-             {error && <p className={styles.error}>{error}</p>}
-  
-            <button type="submit">Login</button>
-            <p>Already have and account?  <a>Login</a></p>
-          </form>
-  
-  
-        </div>
-      </div>
-    );
+  // Validate form
+  const validate = () => {
+    const newErrors = {};
+    if (!form.username.trim()) newErrors.username = "Username is required";
+    if (!form.email.trim()) newErrors.email = "Email is required";
+    if (!form.password.trim()) newErrors.password = "Password is required";
+    return newErrors;
   };
 
-export default Signup;
+  // Handle form submission
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
+    console.log("Form submitted:", form);
+
+    // Redirect to Dashboard after registration
+    navigate("/dashboard");
+  };
+
+  // Handle input changes
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h2 className={styles.title}>Create Your Account</h2>
+        <p className={styles.subtitle}>Fill in the details to register your account.</p>
+
+        <form className={styles.form} onSubmit={handleRegister}>
+          <label>Username</label>
+          <input
+            type="text"
+            name="username"
+            placeholder="Your name"
+            value={form.username}
+            onChange={handleChange}
+          />
+          {errors.username && <p className={styles.error}>{errors.username}</p>}
+
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="user@company.com"
+            value={form.email}
+            onChange={handleChange}
+          />
+          {errors.email && <p className={styles.error}>{errors.email}</p>}
+
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            value={form.password}
+            onChange={handleChange}
+          />
+          {errors.password && <p className={styles.error}>{errors.password}</p>}
+
+          <button type="submit" className={styles.primaryBtn}>
+            Register
+          </button>
+        </form>
+
+        <div className={styles.divider}>OR REGISTER WITH</div>
+
+        <div className={styles.socialButtons}>
+          <button className={styles.googleBtn}>Google</button>
+          <button className={styles.appleBtn}>Apple</button>
+        </div>
+
+        <p className={styles.switchText}>
+          Already have an account? <a href="#">Log In</a>
+        </p>
+      </div>
+    </div>
+  );
+}
