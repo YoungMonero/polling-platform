@@ -17,9 +17,7 @@ root {
   box-sizing: border-box;
 }
 
-body {
+html, body, #root {
   font-family: "Montserrat", sans-serif;
   background-color: rgb(236, 236, 236);
-  margin: 0;
-  box-sizing: 0;
 }

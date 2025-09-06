@@ -15,13 +15,13 @@
   box-sizing: border-box;
 }
 
-body {
-  padding: 40px;
+/* body {
+  padding: 0px;
   justify-content: space-around;
   background-color: #f5f7fb;
   color: var(--dark);
   line-height: 1.6;
-}
+} */
 
 .container {
   display: flex;

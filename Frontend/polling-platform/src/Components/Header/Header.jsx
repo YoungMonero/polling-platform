@@ -116,9 +116,9 @@ const Header = () => {
           <button
             ref={firstLinkRef}
             className={`${Styles.sideBtn} ${location.pathname === '/' ? Styles.active : ''}`}
-            onClick={() => handleNavigateClose('/')}
+            onClick={() => handleNavigateClose('/Dashboard')}
           >
-            Home
+            Dashboard
           </button>
 
           <button
@@ -137,7 +137,7 @@ const Header = () => {
 
           <button
             className={Styles.sideBtn}
-            onClick={() => setIsOpen(false)}
+            onClick={() => handleNavigateClose('/')}
           >
             Close
           </button>
