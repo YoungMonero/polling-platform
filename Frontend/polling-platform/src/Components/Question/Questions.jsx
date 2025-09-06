@@ -2,12 +2,14 @@ import React from 'react'
 import Styles from './Questions.module.css'
 
 const QuestionPage = () => {
-    return (
-        <div className={Styles.container}>
-        <h1>Q&A Page</h1>
-        <p>This is where all your questions will appear.</p>
-      </div>
-    )
+  return (
+    <div className={Styles.container}>
+     <img width="50" height="50" src="https://img.icons8.com/ios/50/new-message.png" alt="new-message"/>
+        className={Styles.image}
+      <h1>Questions Closed</h1>
+      <p>You currently can't send new questions.</p>
+    </div>
+  )
 }
 
 export default QuestionPage

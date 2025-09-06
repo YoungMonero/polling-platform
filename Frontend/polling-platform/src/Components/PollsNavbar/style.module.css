@@ -1,0 +1,41 @@
+/* src/components/Navbar.module.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 10px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #333;
+}
+
+.navbarLeft {
+  display: flex;
+  align-items: center;
+}
+
+.history {
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.sessionName {
+  font-weight: bold;
+}
+
+.navbarRight {
+  display: flex;
+  align-items: center;
+}
+
+.date, .token, .public {
+  margin-right: 15px;
+  color: #666;
+}
+
+.personProfile {
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}

@@ -1,15 +1,15 @@
 import React from 'react'
 import Participant from '../../Components/Participant/Participant'
-import Login from '../../Components/Login/Login'
+import Register from '../../Components/Signup/Signup'
 import styles from './styles.module.css'
 
-const LoginPage = () => {
+const SignUpPage = () => {
   return (
-    <div className={styles.login}>
+    <div className={styles.register}>
       <Participant/>
-      <Login/>
+      <Register/>
     </div>
   )
 }
 
-export default LoginPage
+export default SignUpPage
