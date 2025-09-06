@@ -6,6 +6,7 @@
   background: linear-gradient(138deg, #4361EE,
   #3A0CA3);
   font-size: 1.6rem;
+  
     
 }
 
@@ -16,6 +17,7 @@
 .participant p {
   font-size: 1.3rem;
   padding: 30px 0px;
+  color: white;
 }
 
 .handleinput {
