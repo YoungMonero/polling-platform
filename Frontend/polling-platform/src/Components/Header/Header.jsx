@@ -5,11 +5,11 @@ import Styles from './Header.module.css'
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
-  const location = useLocation() // 👈 current route
+  const location = useLocation()
   const firstLinkRef = useRef(null)
   const hamburgerRef = useRef(null)
 
-  // Close on ESC
+  // Close sidebar on ESC key
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') setIsOpen(false)
@@ -18,7 +18,7 @@ const Header = () => {
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
-  // manage focus & body scroll
+  // Manage focus & body scroll when sidebar opens/closes
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     if (isOpen) {
@@ -35,8 +35,9 @@ const Header = () => {
 
   return (
     <div className={Styles.General}>
+      {/* Top row: header */}
       <div className={Styles.myHeader}>
-        {/* Hamburger */}
+        {/* Hamburger button */}
         <button
           ref={hamburgerRef}
           className={Styles.hamburgerBtn}
@@ -54,6 +55,7 @@ const Header = () => {
           />
         </button>
 
+        {/* Title */}
         <span className={Styles.title}>PULL HUB</span>
 
         {/* Header buttons */}
@@ -73,8 +75,8 @@ const Header = () => {
           </button>
 
           <button
-            className={`${Styles.btn1} ${location.pathname === '/polls' ? Styles.active : ''}`}
-            onClick={() => navigate('/polls')}
+            className={`${Styles.btn1} ${location.pathname === '/pollsPage' ? Styles.active : ''}`}
+            onClick={() => navigate('/pollsPage')}
           >
             <img
               width="20"
@@ -87,6 +89,7 @@ const Header = () => {
           </button>
         </div>
 
+        {/* Profile icon */}
         <img
           width="48"
           height="48"
@@ -95,7 +98,7 @@ const Header = () => {
         />
       </div>
 
-      {/* Overlay */}
+      {/* Overlay (click closes sidebar) */}
       <div
         className={`${Styles.overlay} ${isOpen ? Styles.showOverlay : ''}`}
         onClick={() => setIsOpen(false)}
@@ -126,8 +129,8 @@ const Header = () => {
           </button>
 
           <button
-            className={`${Styles.sideBtn} ${location.pathname === '/polls' ? Styles.active : ''}`}
-            onClick={() => handleNavigateClose('/polls')}
+            className={`${Styles.sideBtn} ${location.pathname === '/pollsPage' ? Styles.active : ''}`}
+            onClick={() => handleNavigateClose('/pollsPage')}
           >
             Polls
           </button>

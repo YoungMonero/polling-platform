@@ -1,6 +1,26 @@
 .container {
-    padding: 20px;
-    color: #fff;
-    min-height: 100vh;
-  }
-  
+  height: 100vh; /* full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertical center */
+  align-items: center; /* horizontal center */
+  text-align: center;
+  background: #f0f0f0; /* light background */
+  padding: 20px;
+}
+
+.image {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+p {
+  font-size: 1.1rem;
+  color: #555;
+}
