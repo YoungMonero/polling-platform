@@ -10,15 +10,18 @@ import './src/models/index.js'; // Initialize database models
 dotenv.config();
 
 const app = express();
+const allowedOrigins = ['http://localhost:5000', 'http://localhost:5173'];
+
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(cors({ 
-//   origin: 'http://localhost:3000', // Allow frontend origin
-//   methods: ['GET', 'POST', 'OPTIONS'], // Handle preflight
-//   credentials: true, // If using cookies or auth headers
-// }));
+app.use(cors({ 
+  origin: allowedOrigins, // Allow frontend origin
+  methods: ['GET', 'POST', 'OPTIONS'], // Handle preflight
+  credentials: true, // If using cookies or auth headers
+}))
+
 
 // Routes
 app.use('/api/auth', authRoutes);

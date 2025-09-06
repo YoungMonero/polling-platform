@@ -10,7 +10,7 @@ app.set('port', port);
 const server = http.createServer(app);
 const io = new Server(server, { 
   cors: { 
-    origin: 'http://localhost:4000', // Frontend dev URL
+    origin: ['http://localhost:5000','http://localhost:5173'], // Frontend dev URL
     methods: ['GET', 'POST'],
   },
 });
@@ -21,6 +21,7 @@ app.use((req, res, next) => {
   req.io = io;
   next();
 });
+
 
 server.listen(port);
 server.on('error', onError);
@@ -57,5 +58,6 @@ function onListening() {
 }
 
 if (process.env.NODE_ENV === 'test') {
-  module.exports = server; // For testing
+  
 }
+export default server

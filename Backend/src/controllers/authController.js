@@ -97,7 +97,7 @@ export const register = async (req, res) => {
     }
 
     const user = createResult.data;
-    req.io.emit('userRegistered', { username, email }); // Real-time event
+    // req.io.emit('userRegistered', { username, email }); // Real-time event
     res.status(201).json({ 
       message: 'User created successfully',
       user: { id: user.id, username, email, role }

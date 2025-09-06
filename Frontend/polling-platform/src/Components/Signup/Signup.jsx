@@ -32,7 +32,7 @@ export default function Register() {
   setErrors({});
   try {
     const { data } = await api.post('/api/auth/register', form); // Updated path
-    console.log('Registration successful:', data);
+    console.log( data);
     navigate('/dashboard');
   } catch (error) {
     console.error('Registration failed:', error.message);
