@@ -1,15 +1,16 @@
 import app from './app.js';
 import http from 'http';
+
 import { Server } from 'socket.io';
 import socketSetup from './src/socket.js'; // Import Socket.IO setup
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 const server = http.createServer(app);
 const io = new Server(server, { 
   cors: { 
-    origin: 'http://localhost:3000', // Frontend dev URL
+    origin: 'http://localhost:4000', // Frontend dev URL
     methods: ['GET', 'POST'],
   },
 });

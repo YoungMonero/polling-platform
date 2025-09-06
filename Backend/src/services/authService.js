@@ -2,8 +2,6 @@ import bcryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
 import { User } from '../models/index.js';
 
-
-
 dotenv.config();
 
 const SALT_ROUNDS = 10;
@@ -28,7 +26,7 @@ class AuthService {
         return { success: false, message: 'Invalid credentials' };
       }
 
-      const isPasswordValid = await user.comparePassword(password);
+      const isPasswordValid = await this.comparePassword(password, user.password);
 
       if (!isPasswordValid) {
         return { success: false, message: 'Invalid credentials' };
@@ -38,7 +36,7 @@ class AuthService {
         success: true,
         user: {
           id: user.id,
-          name: user.name,
+          username: user.username, // Changed from 'name' to 'username'
           email: user.email,
           role: user.role
         }
@@ -64,7 +62,7 @@ class AuthService {
         success: true,
         data: { 
           id: user.id, 
-          name: user.name, 
+          username: user.username, // Changed from 'name' to 'username'
           email: user.email, 
           role: user.role 
         }
@@ -78,7 +76,7 @@ class AuthService {
   /**
    * Create new user
    */
-  async createUser(name, email, password, role = 'user') {
+  async createUser(username, email, password, role = 'user') {
     try {
       const existingUser = await User.findOne({ where: { email } });
 
@@ -86,18 +84,19 @@ class AuthService {
         return { success: false, message: 'Email already exists' };
       }
 
+      const hashedPassword = await this.hashPassword(password);
       const newUser = await User.create({
-        name,
+        username, // Changed from 'name' to 'username'
         email,
         role,
-        password // Model will hash this automatically
+        password: hashedPassword // Hash password here
       });
 
       return {
         success: true,
         data: { 
           id: newUser.id, 
-          name: newUser.name, 
+          username: newUser.username, 
           email: newUser.email, 
           role: newUser.role 
         },
@@ -115,7 +114,7 @@ class AuthService {
   async getAllUsers() {
     try {
       const users = await User.findAll({
-        attributes: ['id', 'name', 'email', 'role', 'createdAt', 'updatedAt']
+        attributes: ['id', 'username', 'email', 'role', 'createdAt', 'updatedAt'] // Changed from 'name' to 'username'
       });
 
       return { success: true, data: users };

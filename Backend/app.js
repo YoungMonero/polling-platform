@@ -1,6 +1,7 @@
 // app.js
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors'; // Add this import
 import authRoutes from './src/routes/authRoutes.js';
 import sessionRoutes from './src/routes/sessionRoute.js';
 import pollRoutes from './src/routes/pollRoutes.js';
@@ -13,6 +14,11 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use(cors({ 
+//   origin: 'http://localhost:3000', // Allow frontend origin
+//   methods: ['GET', 'POST', 'OPTIONS'], // Handle preflight
+//   credentials: true, // If using cookies or auth headers
+// }));
 
 // Routes
 app.use('/api/auth', authRoutes);

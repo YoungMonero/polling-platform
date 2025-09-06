@@ -11,7 +11,6 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Input validation
     if (!email || !password) {
       return res.status(400).json({ 
         message: 'Email and password are required',
@@ -19,7 +18,6 @@ export const login = async (req, res) => {
       });
     }
 
-    // Authenticate user
     const authResult = await authService.authenticateUser(email, password);
 
     if (!authResult.success) {
@@ -30,15 +28,7 @@ export const login = async (req, res) => {
     }
 
     const { user } = authResult;
-
-    // Payload includes id, name, email, and role
-    const payload = {
-      id: user.id,
-      email: user.email,
-      role: user.role
-    };
-
-    // Sign JWT token
+    const payload = { id: user.id, email: user.email, role: user.role };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 
     res.json({ 
@@ -68,7 +58,7 @@ export const getCurrentUser = async (req, res) => {
       });
     }
 
-    res.json(user.data); // returns full user info
+    res.json(user.data);
   } catch (error) {
     console.error('Get current user error:', error);
     res.status(500).json({ 
@@ -81,12 +71,11 @@ export const getCurrentUser = async (req, res) => {
 // ------------------------ REGISTER ------------------------
 export const register = async (req, res) => {
   try {
-    const { name, email, password, role = 'user' } = req.body;
+    const { username, email, password, role = 'user' } = req.body; // Changed 'name' to 'username'
 
-    // Input validation
-    if (!name || !email || !password) {
+    if (!username || !email || !password) {
       return res.status(400).json({ 
-        message: 'Name, email, and password are required',
+        message: 'Username, email, and password are required',
         error: 'VALIDATION_ERROR'
       });
     }
@@ -98,8 +87,7 @@ export const register = async (req, res) => {
       });
     }
 
-    // Create user
-    const createResult = await authService.createUser(name, email, password, role);
+    const createResult = await authService.createUser(username, email, password, role);
 
     if (!createResult.success) {
       return res.status(400).json({ 
@@ -108,9 +96,11 @@ export const register = async (req, res) => {
       });
     }
 
+    const user = createResult.data;
+    req.io.emit('userRegistered', { username, email }); // Real-time event
     res.status(201).json({ 
       message: 'User created successfully',
-      user: createResult.data // full user object
+      user: { id: user.id, username, email, role }
     });
   } catch (error) {
     console.error('Register error:', error);
@@ -124,7 +114,6 @@ export const register = async (req, res) => {
 // ------------------------ LOGOUT ------------------------
 export const logout = async (req, res) => {
   try {
-    // Client should remove token; optionally blacklist token on server
     res.json({ 
       message: 'Logout successful. Please remove the token from client storage.',
       success: true

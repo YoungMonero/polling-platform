@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 
 const Dashboard = ({
   active = true,
-  onCreatePoll = () => {},
+  onCreateSessions = () => {},
   onViewParticipants = () => {},
   onClosePoll = () => {},
   onHideResults = () => {},
