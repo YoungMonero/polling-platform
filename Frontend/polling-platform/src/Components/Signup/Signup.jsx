@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from '../../services/api.js';
 import { connectSocket, onUserRegistered } from '../../services/socket.js';
 import styles from "./styles.module.css";
+
 
 export default function Register() {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
@@ -110,7 +111,7 @@ export default function Register() {
         </div>
 
         <p className={styles.switchText}>
-          Already have an account? <a href="/host/login">Log In</a>
+          Already have an account? <Link>Log In</Link>
         </p>
       </div>
     </div>

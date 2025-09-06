@@ -1,146 +1,258 @@
-// HostDashboard.jsx
-import React from "react";
-import styles from "./styles.module.css";
+// Dashboard.jsx
+import React, { useState } from 'react';
+import { 
+  Plus, 
+  Users, 
+  BarChart3, 
+  Clock, 
+  Play, 
+  Pause, 
+  Edit3, 
+  Eye, 
+  Download, 
+  Calendar,
+  Hash,
+  Settings,
+  ChevronRight,
+  Activity,
+  TrendingUp
+} from 'lucide-react';
+import PollCard from './PollCard';
+import SessionModal from './SessionModal';
+import styles from './styles.module.css';
 
-const Dashboard = ({
-  active = true,
-  onCreateSessions = () => {},
-  onViewParticipants = () => {},
-  onClosePoll = () => {},
-  onHideResults = () => {},
-  onPublish = () => {},
-  onEdit = () => {},
-  onReopen = () => {},
-  onExport = () => {},
-}) => {
+const Dashboard = () => {
+  const [sessions, setSessions] = useState([
+    {
+      id: 1,
+      name: "Webinar Q&A",
+      code: "ABC123",
+      status: "active",
+      participants: 45,
+      polls: 3,
+      date: "2025-09-06"
+    }
+  ]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedSession, setSelectedSession] = useState(null);
+
+  const handleCreateSession = () => {
+    setShowModal(true);
+  };
+
+  const handleSessionClick = (session) => {
+    setSelectedSession(session);
+    // Navigate to poll page logic would go here
+    console.log('Navigating to poll page for session:', session);
+  };
+
+  const addNewSession = (sessionData) => {
+    const newSession = {
+      id: Date.now(),
+      ...sessionData,
+      status: 'active',
+      participants: 0,
+      polls: 0
+    };
+    setSessions([...sessions, newSession]);
+  };
+
   return (
-    <div
-      id="host-dashboard"
-      className={`${styles.view} ${active ? styles.active : ""}`}
-    >
-      <h1 className={styles.hostDash}>Host Dashboard</h1>
+    <div className={styles.dashboard}>
+      {/* Header */}
+      <header className={styles.dashboardHeader}>
+        <div className={styles.headerContent}>
+          <div className={styles.headerLeft}>
+            <h1 className={styles.dashboardTitle}>
+              <Activity className={styles.titleIcon} />
+              Poll Master
+            </h1>
+            <p className={styles.dashboardSubtitle}>Create engaging real-time polls</p>
+          </div>
+          <div className={styles.headerRight}>
+            <div className={styles.userProfile}>
+              <div className={styles.profileAvatar}>JD</div>
+              <div className={styles.profileInfo}>
+                <span className={styles.profileName}>John Doe</span>
+                <span className={styles.profileRole}>Host</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
-      {/* Current session card */}
-      <div className={styles.card}>
-        <div className={styles.cardHeader}>
-          <h2 className={styles.cardTitle}>Current Session: Webinar Q&amp;A</h2>
-          <div>
-            <span className={styles.pollStapub}>Active</span>
-            <span className={styles.sessionCode}>
-              Session Code: <strong>ABC123</strong>
-            </span>
+      <div className={styles.dashboardContent}>
+        {/* Stats Overview */}
+        <div className={styles.statsGrid}>
+          <div className={styles.statCard}>
+            <div className={`${styles.statIcon} ${styles.activeBg}`}>
+              <Activity />
+            </div>
+            <div className={styles.statInfo}>
+              <h3>{sessions.filter(s => s.status === 'active').length}</h3>
+              <p>Active Sessions</p>
+            </div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={`${styles.statIcon} ${styles.participantsBg}`}>
+              <Users />
+            </div>
+            <div className={styles.statInfo}>
+              <h3>{sessions.reduce((total, session) => total + session.participants, 0)}</h3>
+              <p>Total Participants</p>
+            </div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={`${styles.statIcon} ${styles.pollsBg}`}>
+              <BarChart3 />
+            </div>
+            <div className={styles.statInfo}>
+              <h3>{sessions.reduce((total, session) => total + session.polls, 0)}</h3>
+              <p>Total Polls</p>
+            </div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={`${styles.statIcon} ${styles.growthBg}`}>
+              <TrendingUp />
+            </div>
+            <div className={styles.statInfo}>
+              <h3>92%</h3>
+              <p>Engagement Rate</p>
+            </div>
           </div>
         </div>
 
-        <div className={styles.cardBody}>
-          <p>
-            Share this code with participants to join your session:{" "}
-            <strong>ABC123</strong>
-          </p>
+        {/* Sessions Section */}
+        <div className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2>Your Sessions</h2>
+            <button className={styles.btnPrimary} onClick={handleCreateSession}>
+              <Plus size={20} />
+              Create Session
+            </button>
+          </div>
 
-          <div className={styles.viewPart}>
-            <button className={styles.press} onClick={() => onCreatePoll("create-poll")}>
-              Create New Poll
+          {sessions.length === 0 ? (
+            <div className={styles.emptyState}>
+              <div className={styles.emptyIcon}>
+                <Users size={64} />
+              </div>
+              <h3>No sessions yet</h3>
+              <p>Create your first session to start engaging with your audience</p>
+              <button className={`${styles.btnPrimary} ${styles.large}`} onClick={handleCreateSession}>
+                <Plus size={20} />
+                Create Your First Session
+              </button>
+            </div>
+          ) : (
+            <div className={styles.sessionsGrid}>
+              {sessions.map(session => (
+                <div 
+                  key={session.id} 
+                  className={styles.sessionCard}
+                  onClick={() => handleSessionClick(session)}
+                >
+                  <div className={styles.sessionHeader}>
+                    <div className={styles.sessionStatus}>
+                      <div className={`${styles.statusDot} ${styles[session.status]}`}></div>
+                      <span className={`${styles.statusLabel} ${styles[session.status]}`}>
+                        {session.status.charAt(0).toUpperCase() + session.status.slice(1)}
+                      </span>
+                    </div>
+                    <button className={styles.sessionMenu} onClick={(e) => e.stopPropagation()}>
+                      <Settings size={16} />
+                    </button>
+                  </div>
+                  
+                  <h3 className={styles.sessionName}>{session.name}</h3>
+                  
+                  <div className={styles.sessionCode}>
+                    <Hash size={16} />
+                    <span>Code: <strong>{session.code}</strong></span>
+                  </div>
+                  
+                  <div className={styles.sessionStats}>
+                    <div className={styles.sessionStat}>
+                      <Users size={16} />
+                      <span>{session.participants} participants</span>
+                    </div>
+                    <div className={styles.sessionStat}>
+                      <BarChart3 size={16} />
+                      <span>{session.polls} polls</span>
+                    </div>
+                    <div className={styles.sessionStat}>
+                      <Calendar size={16} />
+                      <span>{new Date(session.date).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.sessionActions}>
+                    <button className={styles.btnOutline} onClick={(e) => {
+                      e.stopPropagation();
+                      console.log('View participants for session:', session.id);
+                    }}>
+                      <Eye size={16} />
+                      View Participants
+                    </button>
+                    <ChevronRight className={styles.sessionArrow} size={20} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Recent Polls Section */}
+        <div className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2>Recent Polls</h2>
+            <button className={styles.btnOutline}>
+              View All
             </button>
-            <button className={styles.nonpress} onClick={onViewParticipants}>
-              View Participants
-            </button>
+          </div>
+          
+          <div className={styles.pollsGrid}>
+            <PollCard
+              status="published"
+              question="How satisfied are you with today's presentation?"
+              results={[
+                { label: "Very Satisfied", percentage: 75 },
+                { label: "Satisfied", percentage: 20 },
+                { label: "Neutral", percentage: 5 }
+              ]}
+              onClose={() => console.log('Close poll')}
+              onHideResults={() => console.log('Hide results')}
+            />
+            
+            <PollCard
+              status="draft"
+              question="Which topic would you like to explore further?"
+              onPublish={() => console.log('Publish poll')}
+              onEdit={() => console.log('Edit poll')}
+            />
+            
+            <PollCard
+              status="closed"
+              question="What is your preferred time for the next session?"
+              results={[
+                { label: "Morning", percentage: 40 },
+                { label: "Afternoon", percentage: 35 },
+                { label: "Evening", percentage: 25 }
+              ]}
+              onReopen={() => console.log('Reopen poll')}
+              onExport={() => console.log('Export results')}
+            />
           </div>
         </div>
       </div>
 
-      {/* Your Polls */}
-      <h2 className={styles.hostDash}>Your Polls</h2>
-
-      <div className={`${styles.pollList} ${styles["poll-list"] || ""}`}>
-        {/* Poll 1 — Published */}
-        <div className={styles.pollCard}>
-          <span className={styles.pollStapub}>Published</span>
-          <h3 className={styles.pollQuestion}>
-            How satisfied are you with today&apos;s presentation?
-          </h3>
-
-          <div className={styles.resultsChart}>
-            <div className={styles.chartBar}>
-              <div className={styles.chartFill} style={{ width: "75%" }}>
-                Very Satisfied (75%)
-              </div>
-            </div>
-            <div className={styles.chartBar}>
-              <div className={styles.chartFill} style={{ width: "20%" }}>
-                Satisfied (20%)
-              </div>
-            </div>
-            <div className={styles.chartBar}>
-              <div className={styles.chartFill} style={{ width: "5%" }}>
-                Neutral (5%)
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.popBtn}>
-            <button className={styles.nonwarn} onClick={onClosePoll}>
-              Close Poll
-            </button>
-            <button className={styles.nonout} onClick={onHideResults}>
-              Hide Results
-            </button>
-          </div>
-        </div>
-
-        {/* Poll 2 — Draft */}
-        <div className={styles.pollCard}>
-          <span className={styles.polDraft}>Draft</span>
-          <h3 className={styles.pollQuestion}>
-            Which topic would you like to explore further?
-          </h3>
-          <p>This poll has not been published yet.</p>
-
-          <div className={styles.disBtn}>
-            <button className={styles.nonsuc} onClick={onPublish}>
-              Publish
-            </button>
-            <button className={styles.nonout} onClick={onEdit}>
-              Edit
-            </button>
-          </div>
-        </div>
-
-        {/* Poll 3 — Closed */}
-        <div className={styles.pollCard}>
-          <span className={styles.pollStaclose}>Closed</span>
-          <h3 className={styles.pollQuestion}>
-            What is your preferred time for the next session?
-          </h3>
-
-          <div className={styles.resultsChart}>
-            <div className={styles.chartBar}>
-              <div className={styles.chartFill} style={{ width: "40%" }}>
-                Morning (40%)
-              </div>
-            </div>
-            <div className={styles.chartBar}>
-              <div className={styles.chartFill} style={{ width: "35%" }}>
-                Afternoon (35%)
-              </div>
-            </div>
-            <div className={styles.chartBar}>
-              <div className={styles.chartFill} style={{ width: "25%" }}>
-                Evening (25%)
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.popBtn}>
-            <button className={styles.press} onClick={onReopen}>
-              Reopen
-            </button>
-            <button className={styles.nonpress} onClick={onExport}>
-              Export Results
-            </button>
-          </div>
-        </div>
-      </div>
+      {/* Session Creation Modal */}
+      {showModal && (
+        <SessionModal 
+          onClose={() => setShowModal(false)} 
+          onSubmit={addNewSession}
+        />
+      )}
     </div>
   );
 };

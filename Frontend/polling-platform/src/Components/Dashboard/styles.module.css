@@ -1,3 +1,4 @@
+/* Dashboard.module.css */
 :root {
   --primary: #4361ee;
   --secondary: #3a0ca3;
@@ -8,400 +9,455 @@
   --gray: #6c757d;
   --light-gray: #e9ecef;
 }
-        
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+.dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* body {
-  padding: 0px;
-  justify-content: space-around;
-  background-color: #f5f7fb;
-  color: var(--dark);
-  line-height: 1.6;
-} */
-
-.container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-        
-header {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  padding: 1rem 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Header Styles */
+.dashboardHeader {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
 }
 
 .headerContent {
-  display: none;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  color: red;
+  max-width: 1400px;
+  margin: 0 auto;
 }
-        
-.logo {
-  font-size: 1.8rem;
-  font-weight: 700;
+
+.headerLeft {
+  flex: 1;
+}
+
+.dashboardTitle {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
 }
 
-.logo i {
-  margin-right: 10px;
+.titleIcon {
+  color: var(--success);
 }
 
-.profile {
-  border: 1px solid #f5f7fb;
-  border-radius: 50%;
-  height: 40px;
+.dashboardSubtitle {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0.5rem 0 0 0;
+  font-size: 1rem;
+}
+
+.headerRight {
+  flex: 0 0 auto;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1rem;
+  border-radius: 50px;
+  backdrop-filter: blur(20px);
+}
+
+.profileAvatar {
   width: 40px;
-  background: #f5f7fb;
+  height: 40px;
+  background: var(--success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
 }
 
-/*dashboard*/
-
-.main-content {
-  padding: 2rem 0;
-  min-height: calc(100vh - 180px);
+.profileInfo {
+  display: flex;
+  flex-direction: column;
 }
 
-.view {
-  display: none;
+.profileName {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
-.active {
-  display: block;
+.profileRole {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
 }
 
-.card {
+/* Content Styles */
+.dashboardContent {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.statCard {
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
 }
-        
-.cardHeader {
+
+.statCard:hover {
+  transform: translateY(-2px);
+}
+
+.statIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.activeBg { 
+  background: linear-gradient(135deg, var(--success), var(--primary)); 
+}
+
+.participantsBg { 
+  background: linear-gradient(135deg, var(--warning), #b5179e); 
+}
+
+.pollsBg { 
+  background: linear-gradient(135deg, var(--success), var(--secondary)); 
+}
+
+.growthBg { 
+  background: linear-gradient(135deg, #06d6a0, #118ab2); 
+}
+
+.statInfo h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #2d3748;
+}
+
+.statInfo p {
+  margin: 0;
+  color: #718096;
+  font-weight: 500;
+}
+
+/* Section Styles */
+.section {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.sectionHeader h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0;
+}
+
+/* Button Styles */
+.btnPrimary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.btnPrimary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
+}
+
+.btnPrimary.large {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+
+.btnOutline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.btnOutline:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.emptyIcon {
+  color: #cbd5e0;
+  margin-bottom: 1rem;
+}
+
+.emptyState h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.emptyState p {
+  color: #718096;
+  margin-bottom: 2rem;
+}
+
+/* Sessions Grid */
+.sessionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.sessionCard {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.sessionCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary);
+}
+
+.sessionHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--light-gray);
 }
 
-.cardTitle {
-  font-size: 1.5rem;
+.sessionStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.statusDot.active { 
+  background: #06d6a0; 
+}
+
+.statusDot.draft { 
+  background: #ffd60a; 
+}
+
+.statusDot.closed { 
+  background: var(--warning); 
+}
+
+.statusLabel {
+  font-size: 0.875rem;
   font-weight: 600;
-  color: var(--primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
 }
 
-.btn {
-  padding: 0.5rem 1rem;
+.statusLabel.active {
+  background: rgba(6, 214, 160, 0.1);
+  color: #06d6a0;
+}
+
+.statusLabel.draft {
+  background: rgba(255, 214, 10, 0.1);
+  color: #d69e2e;
+}
+
+.statusLabel.closed {
+  background: rgba(247, 37, 133, 0.1);
+  color: var(--warning);
+}
+
+.sessionMenu {
+  background: none;
   border: none;
-  border-radius: 5px;
+  color: #718096;
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
-.btn-primary {
-  background-color: var(--primary);
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: var(--secondary);
-}
-
-.btn-success {
-  background-color: var(--success);
-  color: white;
-}
-
-.btn-warning {
-  background-color: var(--warning);
-  color: white;
-}
-
-.btn-outline {
-  background-color: transparent;
-  border: 1px solid var(--primary);
+.sessionMenu:hover {
+  background: #e2e8f0;
   color: var(--primary);
 }
 
-.btn-outline:hover {
-  background-color: var(--primary);
-  color: white;
+.sessionName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 1rem 0;
 }
 
-.pollList {
+.sessionCode {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  color: var(--primary);
+  font-weight: 600;
+  border: 2px solid #e2e8f0;
+}
+
+.sessionStats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sessionStat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+.sessionActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sessionArrow {
+  color: #cbd5e0;
+  transition: all 0.2s ease;
+}
+
+.sessionCard:hover .sessionArrow {
+  color: var(--primary);
+  transform: translateX(4px);
+}
+
+/* Polls Grid */
+.pollsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
-.pollCard {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  transition: transform 0.3s;
-}
-
-.pollCard:hover {
-  transform: translateY(-5px);
-}
-
-.pollStatus {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-.statusDraft {
-  background-color: var(--light-gray);
-  color: var(--gray);
-}
-
-.statusPublished {
-  background-color: #e6f7ff;
-  color: var(--primary);
-}
-
-.statusClosed {
-  background-color: #fff2e8;
-  color: #ff8c00;
-}
-
-.pollQuestion {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.poll-options {
-  margin-bottom: 1rem;
-}
-
-.poll-option {
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-  background-color: var(--light);
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.poll-option:hover {
-  background-color: var(--light-gray);
-}
-
-.poll-option.selected {
-  background-color: #e6f7ff;
-  border: 1px solid var(--primary);
-}
-
-.participant-list {
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.participant-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  border-bottom: 1px solid var(--light-gray);
-}
-
-.participant-info {
-  display: flex;
-  align-items: center;
-}
-
-.participant-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: var(--primary);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 1rem;
-  font-weight: 600;
-}
-
-.resultsChart {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--light-gray);
-}
-
-.chartBar {
-  height: 30px;
-  background-color: var(--light);
-  margin-bottom: 0.5rem;
-  border-radius: 5px;
-  overflow: hidden;
-  position: relative;
-}
-
-.chartFill {
-  height: 100%;
-  background-color: var(--primary);
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-  color: white;
-  font-weight: 500;
-}
-
-
-.hostDash {
-    margin-bottom: 1.5rem;
-}
-.viewPart{
-  display: flex; 
-  gap: 10px; 
-  margin-top: 1rem;
-}
-
-.pollStapub {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  background-color: #e6f7ff;
-  color: var(--primary);
-}
-
-
-.sessionCode {
-  margin-left: 1rem; 
-  font-weight: 500;
-}
-
-.press {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s;
-  background-color: var(--primary);
-  color: white;
-}
-.nonpress {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s;
-  background-color: transparent;
-  border: 1px solid var(--primary);
-  color: var(--primary);
-}
-
-.popBtn{
-  display: flex; 
-  gap: 10px; 
-  margin-top: 1rem;
-}
-
-.nonwarn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s;
-  background-color: var(--warning);
-  color: white;
-}
-
-.nonout {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s;
-  background-color: transparent;
-  border: 1px solid var(--primary);
-  color: var(--primary);
-}
-.nonsuc {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s;
-  background-color: transparent;
-  background-color: var(--success);
-  color: white;
-}
-
-
-.polDraft {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  background-color: var(--light-gray);
-  color: var(--gray);
-}
-
-.disBtn{
-  display: flex; 
-  gap: 10px; 
-  margin-top: 1rem;
-}
-
-.pollStaclose{
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  background-color: #fff2e8;
-  color: #ff8c00;
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
-  .header-content {
-      flex-direction: column;
-      text-align: center;
+  .dashboardContent {
+    padding: 1rem;
   }
-  
-  nav ul {
-      margin-top: 1rem;
-      justify-content: center;
+
+  .headerContent {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
   }
-  
-  .poll-list {
-      grid-template-columns: 1fr;
+
+  .statsGrid {
+    grid-template-columns: 1fr;
   }
-  
-  .footer-content {
-      flex-direction: column;
+
+  .sessionsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .pollsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .userProfile {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboardHeader {
+    padding: 1rem;
+  }
+
+  .section {
+    padding: 1rem;
+  }
+
+  .sessionCard {
+    padding: 1rem;
+  }
+
+  .statCard {
+    padding: 1rem;
   }
 }
