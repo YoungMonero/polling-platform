@@ -1,0 +1,25 @@
+@media (max-width: 768px) {
+    .heaade {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .heaad {
+       gap: 8px;
+    display: flex; 
+    }
+}
+
+.heaade {
+    display: flex;
+    justify-content: space-between;
+    background-color: #3A0CA3;
+    align-items: center;
+    padding: 0.5rem 0.5rem;
+}
+
+.heaad {
+    gap: 0.5rem;
+    display: flex;
+}
