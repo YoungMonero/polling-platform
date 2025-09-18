@@ -28,7 +28,7 @@ const Participant = () => {
             onChange={(e) => setCode(e.target.value)}
           />
         </label>
-        <button type="submit" ><ArrowRight/></button>
+        <button type="submit" onClick={() => handleNavigation("./Session")}><ArrowRight/></button>
       </form>
       </div>
     </div>
